@@ -1,4 +1,0 @@
-WebClock
-========
-
-clocks for website
