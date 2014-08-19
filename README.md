@@ -1,4 +1,4 @@
 WebClock
 ========
 
-clocks for website
+WebClock is a jquery plugin that transform divs into clocks.
