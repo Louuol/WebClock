@@ -1,7 +1,6 @@
 WebClock
 ========
 
-<<<<<<< HEAD
 WebClock is a jQuery plugin that allows you to insert clocks on your web sites.
 
 ##How to use
@@ -18,5 +17,4 @@ Then, call `.clockify()` on an jQuery object you want to transform into a clock.
   $('#yourDiv').clockify();
 </script>
 ```
-=======
->>>>>>> origin/master
+
