@@ -3,6 +3,10 @@
 <head>
   <title>WebClock - Test page</title>
   <style>
+      body
+      {
+          background-color: #2ecc71;
+      }
       #myDiv
       {
           position: absolute;
@@ -22,7 +26,16 @@
   <script type="text/javascript" src='webclock.js'></script>
   <script type="text/javascript">
       window.onload = function () {
-          $('#myDiv').clockify();
+          $('#myDiv').clockify({
+            'border-color': 'white',
+            'hand-hour-color': '#f39c12',
+            'hand-minute-color': '#f1c40f',
+            'hand-second-color': '#27ae60',
+            'hours-color': 'rgba(255,255,255,0.8)',
+            'border': false,
+            'transition': 1,
+            'transition-style': 'linear'
+            });
       }
   </script>
 </body>
