@@ -35,7 +35,7 @@ $.fn.clockify = function (options) {
 
     //show the hour bars
     if (options['hours']) {
-        var style = $('<style>.hour-bar { background-color:' + options['hours-color']+ ';position:absolute; }</style>');
+        var style = $('<style>.hour-bar { background-color:' + options['hours-color']+ ';position:absolute; transform-origin: center center;}</style>');
         $('html > head').append(style);
 
         //create the hour bars
@@ -50,8 +50,8 @@ $.fn.clockify = function (options) {
                 height: max * 0.08,
                 width: max * 0.015,
                 top: s.height() / 2 - max * 0.08 / 2,
-                left: s.width() / 2 - max * 0.015 / 2,
-                transform: 'translate(' + parseInt(Math.cos(angle) * max * 0.46) + 'px,' + parseInt(Math.sin(angle) * max * 0.46) + 'px) rotate(' + (Math.PI / 2 + angle) + 'rad)'
+                left: s.width() / 2 - max * 0.015/ 2,
+                transform: 'translate(' + Math.round(Math.cos(angle) * max * 0.46) + 'px,' + Math.round(Math.sin(angle) * max * 0.46) + 'px) rotate(' + (Math.PI / 2 + angle) + 'rad)'
             });
             count++;
             angle += Math.PI / 6;
@@ -94,9 +94,9 @@ $.fn.clockify = function (options) {
         }
         var date = options['time-function']();
         var t = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 3600;
-        var h = (t * (360 / 12 / 3600) + 180);
-        var m = (t * (360 / 3600) + 180);
-        var sec = (t * (360 / 60) + 180);
+        var h = (t * (360 / 12 / 3600));
+        var m = (t * (360 / 3600));
+        var sec = (t * (360 / 60));
         s.children('.hand-second').css('transform', 'rotate(' + sec.toString() + 'deg)');
         s.children('.hand-minute').css('transform', 'rotate(' + m.toString() + 'deg)');
         s.children('.hand-hour').css('transform', 'rotate(' + h.toString() + 'deg)');
@@ -109,9 +109,9 @@ $.fn.clockify = function (options) {
                 }
                 var date = options['time-function']();
                 var t = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 3600;
-                var h = (t * (360 / 12 / 3600) + 180);
-                var m = (t * (360 / 3600) + 180);
-                var sec = (t * (360 / 60) + 180);
+                var h = (t * (360 / 12 / 3600));
+                var m = (t * (360 / 3600));
+                var sec = (t * (360 / 60));
                 s.children('.hand-second').css('transform', 'rotate(' + sec.toString() + 'deg)');
                 s.children('.hand-minute').css('transform', 'rotate(' + m.toString() + 'deg)');
                 s.children('.hand-hour').css('transform', 'rotate(' + h.toString() + 'deg)');
