@@ -11,11 +11,20 @@ $.fn.clockify = function (options) {
         'hand-minute': true,
         'hand-second': true,
         animate: true,
-        'time-function': function () { return new Date(); }
+        'time-function': function () { return new Date(); },
+        'border': true,
+        'border-size': 0.01,
+        'border-style': 'solid',
     };
     var options = $.extend({}, defaults, options);
 
     var max = Math.min(s.height(), s.width());
+    s.css({
+        
+    });
+    if (options['border']) {
+        s.css({ 'border': max * options['border-size'] + 'px ' + options['border-style'] + ' black', 'border-radius': '50%' });
+    }
 
     //show the hour bars
     if (options['hours']) {
@@ -73,19 +82,21 @@ $.fn.clockify = function (options) {
                 'margin-left': (max * 0.005)
             });
         }
+        var date = options['time-function']();
+        var t = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 3600;
+        var h = (t * (360 / 12 / 3600) + 180);
+        var m = (t * (360 / 3600) + 180);
+        var sec = (t * (360 / 60) + 180);
+        s.children('.hand-second').css('transform', 'rotate(' + sec.toString() + 'deg)');
+        s.children('.hand-minute').css('transform', 'rotate(' + m.toString() + 'deg)');
+        s.children('.hand-hour').css('transform', 'rotate(' + h.toString() + 'deg)');
         if (options['animate']) {
-            var date = options['time-function']();
-            var t = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 3600;
-            var h = (t * (360 / 12 / 3600) + 180);
-            var m = (t * (360 / 3600) + 180);
-            var sec = (t * (360 / 60) + 180);
-            s.children('.hand-second').css('transform', 'rotate(' + sec.toString() + 'deg)');
-            s.children('.hand-minute').css('transform', 'rotate(' + m.toString() + 'deg)');
-            s.children('.hand-hour').css('transform', 'rotate(' + h.toString() + 'deg)');
             var first = true;
             setInterval(function () {
-                if (first)
+                if (first) {
                     $('.hand').css('transition', 'all ' + options['transition'] + 's');
+                    first = false;
+                }
                 var date = options['time-function']();
                 var t = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 3600;
                 var h = (t * (360 / 12 / 3600) + 180);
