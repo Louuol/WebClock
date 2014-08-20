@@ -1,6 +1,7 @@
 
 $.fn.clockify = function (options) {
     var s = $(this);
+    s.html('');
     // set up default options 
     var defaults = {
         hours: true,
@@ -15,6 +16,12 @@ $.fn.clockify = function (options) {
         'border': true,
         'border-size': 0.01,
         'border-style': 'solid',
+        'border-color': 'gray',
+        'hands-color': 'black',
+        'hand-hour-color': 'red',
+        'hand-minute-color': 'blue',
+        'hand-second-color': 'green',
+        'hours-color': 'orange',
     };
     var options = $.extend({}, defaults, options);
 
@@ -23,12 +30,12 @@ $.fn.clockify = function (options) {
         
     });
     if (options['border']) {
-        s.css({ 'border': max * options['border-size'] + 'px ' + options['border-style'] + ' black', 'border-radius': '50%' });
+        s.css({ 'border': max * options['border-size'] + 'px ' + options['border-style'] + ' ' + options['border-color'], 'border-radius': '50%',});
     }
 
     //show the hour bars
     if (options['hours']) {
-        var style = $('<style>.hour-bar { background-color: black;position:absolute; }</style>');
+        var style = $('<style>.hour-bar { background-color:' + options['hours-color']+ ';position:absolute; }</style>');
         $('html > head').append(style);
 
         //create the hour bars
@@ -52,24 +59,16 @@ $.fn.clockify = function (options) {
     }
     //show the clock hands
     if (options['hands']) {
-        var style = $('<style>.hand { background-color: black;position:absolute;transform-origin: 50% ' + (100 - options['hands-origin']) + '%}</style>');
+        var style = $('<style>.hand { background-color:'+ options['hands-color'] +';position:absolute;transform-origin: 50% ' + (100 - options['hands-origin']) + '%}</style>');
         $('html > head').append(style);
-        if (options['hand-hour']) {
-            s.append('<div class="hand hand-hour"></div>');
-            s.children('.hand-hour').css({
-                height: max * 0.20,
-                width: max * 0.015,
-                top: s.height() / 2 - max * 0.20 + options['hands-origin'] * (max * 0.20) / 100,
-                left: s.width() / 2 - max * 0.015 / 2
-            });
-        }
         if (options['hand-minute']) {
             s.append('<div class="hand hand-minute"></div>');
             s.children('.hand-minute').css({
                 height: max * 0.33,
                 width: max * 0.015,
                 top: s.height() / 2 - max * 0.33 + options['hands-origin'] * (max * 0.33) / 100,
-                left: s.width() / 2 - max * 0.015 / 2
+                left: s.width() / 2 - max * 0.015 / 2,
+                'background-color': options['hand-minute-color']
             });
         }
         if (options['hand-second']) {
@@ -79,7 +78,18 @@ $.fn.clockify = function (options) {
                 width: max * 0.005,
                 top: s.height() / 2 - max * 0.40 + options['hands-origin'] * (max * 0.40) / 100,
                 left: s.width() / 2 - max * 0.015 / 2,
-                'margin-left': (max * 0.005)
+                'margin-left': (max * 0.005),
+                'background-color': options['hand-second-color']
+            });
+        }
+        if (options['hand-hour']) {
+            s.append('<div class="hand hand-hour"></div>');
+            s.children('.hand-hour').css({
+                height: max * 0.20,
+                width: max * 0.015,
+                top: s.height() / 2 - max * 0.20 + options['hands-origin'] * (max * 0.20) / 100,
+                left: s.width() / 2 - max * 0.015 / 2,
+                'background-color': options['hand-hour-color']
             });
         }
         var date = options['time-function']();
